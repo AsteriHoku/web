@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: gray;
+            color: white;
+        }
+
+        .container {
+            width: 80vw;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            border: black;
+            border-style: solid;
+            border-width: 5px;
+            background-color: #5f9ea0;
+        }
+    </style>
+    <title>Ridiculous Response Repository</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Ridiculous Response Repository</h1>
+            <p style="font-style: oblique;">Enter your info and let your questions just get more confusing!</p>
+        </div>
+        <div class="row">
+            <div class="col-md-8 g-3">
+                <div class="row">
+                    <form id="chatForm" name="chatForm"></form>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Enter your name. Rick's name is Rick." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="favorite-color" class="form-label">Favorite Color:</label>
+                            <input type="text" class="form-control" id="favorite-color" name="favorite-color"
+                                placeholder="Enter your favorite color. Rick likes blue." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="interest1" class="form-label">Interest 1:</label>
+                            <input type="text" class="form-control" id="interest1" name="interest1"
+                                placeholder="Enter your first interest. Rick likes stars." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="interest2" class="form-label">Interest 2:</label>
+                            <input type="text" class="form-control" id="interest2" name="interest2"
+                                placeholder="Enter your second interest. Rick also likes programming." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="interest3" class="form-label">Interest 3:</label>
+                            <input type="text" class="form-control" id="interest3" name="interest3"
+                                placeholder="Enter your third interest. Rick also likes physics." required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="question" class="form-label">Question:</label>
+                            <input type="text" class="form-control text-wrap" style="height: 25vw;" id="question" name="question"
+                                placeholder="Enter your question here. Rick wants to know how many planets there are in the universe."
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submit" name="submit">Submit</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4 g-3">
+                <div class="text">
+                    <p>
+                        <%= ejsAnswer %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const form = document.getElementById('chatForm');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            const ejsname = document.getElementById('name').value;
+            const ejscolor = document.getElementById('favorite-color').value;
+            const ejsint1 = document.getElementById('interest1').value;
+            const ejsint2 = document.getElementById('interest2').value;
+            const ejsint3 = document.getElementById('interest3').value;
+            const ejsquestion = document.getElementById('question').value;
+
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: ejsname, color: ejscolor, int1: ejsint1, int2: ejsint2, int3: ejsint3, question: ejsquestion })
+            });
+
+            // const data = await response.json();
+            // // Do something with the response data (e.g., update the UI)
+            // console.log(data.reply);
+        });
+    </script>
+
+</body>
+
+</html>
